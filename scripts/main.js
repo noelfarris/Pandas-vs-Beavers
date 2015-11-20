@@ -2,8 +2,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var HomeComponent = React.createClass({
-	render: function(){
+var Home = React.createClass({
+	render(){
 		return (
 			<div>
 				<div className="header">
@@ -14,7 +14,7 @@ var HomeComponent = React.createClass({
 					</div>
 				</div>
 				<div>
-					<GameBoardComponent />
+					<GameBoard />
 				</div>
 			</div>
 		);
@@ -22,8 +22,8 @@ var HomeComponent = React.createClass({
 	
 })
 
-var GameBoardComponent = React.createClass({
-	getInitialState: function() {
+var GameBoard = React.createClass({
+	getInitialState() {
         return {
             //Initial state of the game board
             tiles:  [
@@ -37,9 +37,9 @@ var GameBoardComponent = React.createClass({
             counter: 8
         }
     },
-    switchPlayer: function() {
+    switchPlayer() {
     		//Creating Function to switch player on the parent element to use once move has been
-    		//made on the TileComponent.
+    		//made on the Tile.
 			if(this.state.activePlayer == 'Pandas'){
 				this.setState({ activePlayer: 'Beavers' });
 			}else{
@@ -47,13 +47,13 @@ var GameBoardComponent = React.createClass({
 			}
     },
 
-    setTiles: function(position, value){
+    setTiles(position, value){
     		//Setting the state on the tiles position
 			var myTiles = this.state.tiles
 			myTiles[position] = value;
 			this.setState({tiles: myTiles});
     },
-    checkWinner: function(){
+    checkWinner(){
     	console.log(this.state.counter);
     	 // Running through the positions of the tiles to declare a winner
     	if(this.state.tiles[0] == this.state.tiles[1] 
@@ -115,16 +115,16 @@ var GameBoardComponent = React.createClass({
 		} 
     },
 
-    resetGame: function() {
+    resetGame() {
             this.setState(this.getInitialState());
     },
 
-	render: function(){
+	render(){
 		//mapping through the tile board, passing elements through to the Tile Component
 		var gBTiles = this.state.tiles
 			.map((tile, position) => {
 			return(
-				<TileComponent key={position} pos={position} tiles={tile} player={this.state.activePlayer} 
+				<Tile key={position} pos={position} tiles={tile} player={this.state.activePlayer} 
 				switchPlayer={this.switchPlayer} checkWinner={this.checkWinner} 
 				setTiles={this.setTiles} resetAction={this.resetGame}/>
 			);
@@ -150,8 +150,8 @@ var GameBoardComponent = React.createClass({
 	}
 });
 
-var TileComponent = React.createClass({
-	getInitialState: function(){
+var Tile = React.createClass({
+	getInitialState(){
 		//Initial design of players on game board
 		return{
 			playerOne: <div className="animalIconsPanda"></div>,
@@ -160,7 +160,7 @@ var TileComponent = React.createClass({
 		}
 	},
 
-	render: function(){
+	render(){
 		//Setting the position, click event and design for the tiles
 		return (
 				<div className="col-xs-4 tile" id={'tiles'+ this.props.pos} onClick={this.onMove}>
@@ -173,7 +173,7 @@ var TileComponent = React.createClass({
 		);
 	},
 
-onMove: function onMove(event) {
+	onMove(event) {
 		if(this.state.tiles != undefined){
 			return;
 		}
@@ -193,7 +193,7 @@ onMove: function onMove(event) {
 })
 
 ReactDOM.render(
-	<HomeComponent />,
+	<Home />,
 	document.getElementById('app')
 	)
 })();

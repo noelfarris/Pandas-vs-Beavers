@@ -19086,8 +19086,8 @@ module.exports = require('./lib/React');
 	var React = require('react');
 	var ReactDOM = require('react-dom');
 
-	var HomeComponent = React.createClass({
-		displayName: 'HomeComponent',
+	var Home = React.createClass({
+		displayName: 'Home',
 
 		render: function render() {
 			return React.createElement(
@@ -19113,15 +19113,15 @@ module.exports = require('./lib/React');
 				React.createElement(
 					'div',
 					null,
-					React.createElement(GameBoardComponent, null)
+					React.createElement(GameBoard, null)
 				)
 			);
 		}
 
 	});
 
-	var GameBoardComponent = React.createClass({
-		displayName: 'GameBoardComponent',
+	var GameBoard = React.createClass({
+		displayName: 'GameBoard',
 
 		getInitialState: function getInitialState() {
 			return {
@@ -19135,7 +19135,7 @@ module.exports = require('./lib/React');
 		},
 		switchPlayer: function switchPlayer() {
 			//Creating Function to switch player on the parent element to use once move has been
-			//made on the TileComponent.
+			//made on the Tile.
 			if (this.state.activePlayer == 'Pandas') {
 				this.setState({ activePlayer: 'Beavers' });
 			} else {
@@ -19196,7 +19196,7 @@ module.exports = require('./lib/React');
 
 			//mapping through the tile board, passing elements through to the Tile Component
 			var gBTiles = this.state.tiles.map(function (tile, position) {
-				return React.createElement(TileComponent, { key: position, pos: position, tiles: tile, player: _this.state.activePlayer,
+				return React.createElement(Tile, { key: position, pos: position, tiles: tile, player: _this.state.activePlayer,
 					switchPlayer: _this.switchPlayer, checkWinner: _this.checkWinner,
 					setTiles: _this.setTiles, resetAction: _this.resetGame });
 			});
@@ -19237,8 +19237,8 @@ module.exports = require('./lib/React');
 		}
 	});
 
-	var TileComponent = React.createClass({
-		displayName: 'TileComponent',
+	var Tile = React.createClass({
+		displayName: 'Tile',
 
 		getInitialState: function getInitialState() {
 			//Initial design of players on game board
@@ -19281,7 +19281,7 @@ module.exports = require('./lib/React');
 
 	});
 
-	ReactDOM.render(React.createElement(HomeComponent, null), document.getElementById('app'));
+	ReactDOM.render(React.createElement(Home, null), document.getElementById('app'));
 })();
 
 },{"react":158,"react-dom":2}]},{},[159])
