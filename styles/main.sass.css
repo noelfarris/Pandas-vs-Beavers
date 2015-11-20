@@ -1,0 +1,31 @@
+.header {
+  background: #add8e6;
+  color: #fff; }
+
+.gameBoard {
+  margin: 0 2em; }
+
+.tile {
+  border: 1px solid #b4b4b4;
+  height: 10em;
+  text-align: center; }
+
+.animalIconsPanda {
+  background-image: url("../images/panda.png");
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat; }
+
+.animalIconsBeaver {
+  background-image: url("../images/beaver.png");
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat; }
+
+@media screen and (min-width: 768px) {
+  .gameBoard {
+    margin: 0 17em; } }
+
+@media screen and (min-width: 1200px) {
+  .gameBoard {
+    margin: 0 25em; } }
