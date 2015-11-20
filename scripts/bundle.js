@@ -19123,89 +19123,78 @@ module.exports = require('./lib/React');
 	var GameBoard = React.createClass({
 		displayName: 'GameBoard',
 
+		//setting the state on game spaces, player and winner
 		getInitialState: function getInitialState() {
 			return {
-				//Initial state of the game board
-				tiles: ['', '', '', '', '', '', '', '', ''],
-				//Initial state of the player
-				activePlayer: 'Pandas',
-				winnerElement: null,
-				counter: 8
+				spaces: ['', '', '', '', '', '', '', '', ''],
+				turn: 'Pandas',
+				winner: null
 			};
 		},
 		switchPlayer: function switchPlayer() {
-			//Creating Function to switch player on the parent element to use once move has been
-			//made on the Tile.
-			if (this.state.activePlayer == 'Pandas') {
-				this.setState({ activePlayer: 'Beavers' });
-			} else {
-				this.setState({ activePlayer: 'Pandas' });
-			}
+			//Switching the turn state to the next player
+			this.setState({ turn: this.state.turn === 'Pandas' ? 'Beavers' : 'Pandas' });
 		},
 
-		setTiles: function setTiles(position, value) {
-			//Setting the state on the tiles position
-			var myTiles = this.state.tiles;
-			myTiles[position] = value;
-			this.setState({ tiles: myTiles });
+		setspaces: function setspaces(position, value) {
+			//Setting the state on the spaces position
+			var myspaces = this.state.spaces;
+			myspaces[position] = value;
+			this.setState({ spaces: myspaces });
 		},
-		checkWinner: function checkWinner() {
+		checkBoard: function checkBoard() {
 			console.log(this.state.counter);
-			// Running through the positions of the tiles to declare a winner
-			if (this.state.tiles[0] == this.state.tiles[1] && this.state.tiles[1] == this.state.tiles[2]) {
-				this.setState({ winnerElement: this.state.tiles[0] });
-				return this.state.tiles[0];
-				console.log(this.state.tiles[0]);
-			} else if (this.state.tiles[3] == this.state.tiles[4] && this.state.tiles[4] == this.state.tiles[5]) {
-				this.setState({ winnerElement: this.state.tiles[3] });
-				return this.state.tiles[3];
-				console.log(this.state.tiles[3]);
-			} else if (this.state.tiles[6] == this.state.tiles[7] && this.state.tiles[7] == this.state.tiles[8]) {
-				this.setState({ winnerElement: this.state.tiles[6] });
-				return this.state.tiles[6];
-				console.log(this.state.tiles[6]);
-			} else if (this.state.tiles[2] == this.state.tiles[4] && this.state.tiles[4] == this.state.tiles[6]) {
-				this.setState({ winnerElement: this.state.tiles[2] });
-				return this.state.tiles[2];
-				console.log(this.state.tiles[2]);
-			} else if (this.state.tiles[0] == this.state.tiles[4] && this.state.tiles[4] == this.state.tiles[8]) {
-				this.setState({ winnerElement: this.state.tiles[0] });
-				return this.state.tiles[0];
-				console.log(this.state.tiles[0]);
-			} else if (this.state.tiles[0] == this.state.tiles[3] && this.state.tiles[3] == this.state.tiles[6]) {
-				this.setState({ winnerElement: this.state.tiles[0] });
-				return this.state.tiles[0];
-				console.log(this.state.tiles[0]);
-			} else if (this.state.tiles[1] == this.state.tiles[4] && this.state.tiles[4] == this.state.tiles[7]) {
-				this.setState({ winnerElement: this.state.tiles[1] });
-				return this.state.tiles[1];
-				console.log(this.state.tiles[1]);
-			} else if (this.state.tiles[2] == this.state.tiles[5] && this.state.tiles[5] == this.state.tiles[8]) {
-				this.setState({ winnerElement: this.state.tiles[2] });
-				return this.state.tiles[2];
-				console.log(this.state.tiles[2]);
+			//logic to check spaces for a winning combination
+			if (this.state.spaces[0] == this.state.spaces[1] && this.state.spaces[1] == this.state.spaces[2]) {
+				this.setState({ winner: this.state.spaces[0] });
+				return this.state.spaces[0];
+				console.log(this.state.spaces[0]);
+			} else if (this.state.spaces[3] == this.state.spaces[4] && this.state.spaces[4] == this.state.spaces[5]) {
+				this.setState({ winner: this.state.spaces[3] });
+				return this.state.spaces[3];
+				console.log(this.state.spaces[3]);
+			} else if (this.state.spaces[6] == this.state.spaces[7] && this.state.spaces[7] == this.state.spaces[8]) {
+				this.setState({ winner: this.state.spaces[6] });
+				return this.state.spaces[6];
+				console.log(this.state.spaces[6]);
+			} else if (this.state.spaces[2] == this.state.spaces[4] && this.state.spaces[4] == this.state.spaces[6]) {
+				this.setState({ winner: this.state.spaces[2] });
+				return this.state.spaces[2];
+				console.log(this.state.spaces[2]);
+			} else if (this.state.spaces[0] == this.state.spaces[4] && this.state.spaces[4] == this.state.spaces[8]) {
+				this.setState({ winner: this.state.spaces[0] });
+				return this.state.spaces[0];
+				console.log(this.state.spaces[0]);
+			} else if (this.state.spaces[0] == this.state.spaces[3] && this.state.spaces[3] == this.state.spaces[6]) {
+				this.setState({ winner: this.state.spaces[0] });
+				return this.state.spaces[0];
+				console.log(this.state.spaces[0]);
+			} else if (this.state.spaces[1] == this.state.spaces[4] && this.state.spaces[4] == this.state.spaces[7]) {
+				this.setState({ winner: this.state.spaces[1] });
+				return this.state.spaces[1];
+				console.log(this.state.spaces[1]);
+			} else if (this.state.spaces[2] == this.state.spaces[5] && this.state.spaces[5] == this.state.spaces[8]) {
+				this.setState({ winner: this.state.spaces[2] });
+				return this.state.spaces[2];
+				console.log(this.state.spaces[2]);
 			}
-		},
-
-		resetGame: function resetGame() {
-			this.setState(this.getInitialState());
 		},
 
 		render: function render() {
 			var _this = this;
 
 			//mapping through the tile board, passing elements through to the Tile Component
-			var gBTiles = this.state.tiles.map(function (tile, position) {
-				return React.createElement(Tile, { key: position, pos: position, tiles: tile, player: _this.state.activePlayer,
-					switchPlayer: _this.switchPlayer, checkWinner: _this.checkWinner,
-					setTiles: _this.setTiles, resetAction: _this.resetGame });
+			var gBspaces = this.state.spaces.map(function (tile, position) {
+				return React.createElement(Tile, { key: position, pos: position, spaces: tile, player: _this.state.turn,
+					switchPlayer: _this.switchPlayer, checkBoard: _this.checkBoard,
+					setspaces: _this.setspaces, resetAction: _this.resetGame });
 			});
-			if (!this.state.winnerElement) {
+			if (!this.state.winner) {
 				var currentTurn = React.createElement(
 					'h5',
 					null,
 					'Your turn: ',
-					this.state.activePlayer
+					this.state.turn
 				);
 			} else {
 				currentTurn = React.createElement(
@@ -19214,7 +19203,7 @@ module.exports = require('./lib/React');
 					React.createElement(
 						'h2',
 						null,
-						this.state.winnerElement,
+						this.state.winner,
 						' win!'
 					)
 				);
@@ -19232,7 +19221,7 @@ module.exports = require('./lib/React');
 						currentTurn
 					)
 				),
-				gBTiles
+				gBspaces
 			);
 		}
 	});
@@ -19250,11 +19239,11 @@ module.exports = require('./lib/React');
 		},
 
 		render: function render() {
-			//Setting the position, click event and design for the tiles
+			//Setting the position, click event and design for the spaces
 			return React.createElement(
 				'div',
-				{ className: 'col-xs-4 tile', id: 'tiles' + this.props.pos, onClick: this.onMove },
-				this.state.tiles,
+				{ className: 'col-xs-4 tile', id: 'spaces' + this.props.pos, onClick: this.move },
+				this.state.spaces,
 				React.createElement(
 					'div',
 					null,
@@ -19263,20 +19252,20 @@ module.exports = require('./lib/React');
 			);
 		},
 
-		onMove: function onMove(event) {
-			if (this.state.tiles != undefined) {
+		move: function move(event) {
+			if (this.state.spaces != undefined) {
 				return;
 			}
 			if (this.props.player == 'Pandas') {
-				this.setState({ tiles: this.state.playerOne });
-				this.props.setTiles(this.props.pos, 'Pandas');
+				this.setState({ spaces: this.state.playerOne });
+				this.props.setspaces(this.props.pos, 'Pandas');
 			} else {
-				this.setState({ tiles: this.state.playerTwo });
-				this.props.setTiles(this.props.pos, 'Beavers');
+				this.setState({ spaces: this.state.playerTwo });
+				this.props.setspaces(this.props.pos, 'Beavers');
 			}
-			this.props.setTiles(this.props.key);
+			this.props.setspaces(this.props.key);
 			this.props.switchPlayer();
-			this.props.checkWinner();
+			this.props.checkBoard();
 		}
 
 	});
