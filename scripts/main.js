@@ -113,10 +113,10 @@ var GameBoardComponent = React.createClass({
 				return this.state.tiles[2];	
 				console.log(this.state.tiles[2]);		
 		} 
-		else if(this.state.counter > 0) {
-			this.setstate({counter: counter - 1})
-			console.log(this.state.counter);
-		} 
+    },
+
+    resetGame: function() {
+            this.setState(this.getInitialState());
     },
 
 	render: function(){
@@ -126,12 +126,12 @@ var GameBoardComponent = React.createClass({
 			return(
 				<TileComponent key={position} pos={position} tiles={tile} player={this.state.activePlayer} 
 				switchPlayer={this.switchPlayer} checkWinner={this.checkWinner} 
-				setTiles={this.setTiles}/>
+				setTiles={this.setTiles} resetAction={this.resetGame}/>
 			);
 		});
 		if(!this.state.winnerElement){
 			var currentTurn = 
-				<h5>Current Turn: {this.state.activePlayer}</h5>
+				<h5>Your turn: {this.state.activePlayer}</h5>
 		}else{
 			currentTurn =
 				<div>
@@ -145,7 +145,6 @@ var GameBoardComponent = React.createClass({
 					<div>{currentTurn}</div>
 				</div>
 				{gBTiles}
-				
 			</div>
 		);
 	}

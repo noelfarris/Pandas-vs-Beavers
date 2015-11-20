@@ -19184,10 +19184,11 @@ module.exports = require('./lib/React');
 				this.setState({ winnerElement: this.state.tiles[2] });
 				return this.state.tiles[2];
 				console.log(this.state.tiles[2]);
-			} else if (this.state.counter > 0) {
-				this.setstate({ counter: counter - 1 });
-				console.log(this.state.counter);
 			}
+		},
+
+		resetGame: function resetGame() {
+			this.setState(this.getInitialState());
 		},
 
 		render: function render() {
@@ -19197,13 +19198,13 @@ module.exports = require('./lib/React');
 			var gBTiles = this.state.tiles.map(function (tile, position) {
 				return React.createElement(TileComponent, { key: position, pos: position, tiles: tile, player: _this.state.activePlayer,
 					switchPlayer: _this.switchPlayer, checkWinner: _this.checkWinner,
-					setTiles: _this.setTiles });
+					setTiles: _this.setTiles, resetAction: _this.resetGame });
 			});
 			if (!this.state.winnerElement) {
 				var currentTurn = React.createElement(
 					'h5',
 					null,
-					'Current Turn: ',
+					'Your turn: ',
 					this.state.activePlayer
 				);
 			} else {

@@ -1,12 +1,14 @@
 .header {
-  background: #add8e6;
+  background: #408DFF;
   color: #fff; }
+  .header h1 {
+    text-align: center; }
 
 .gameBoard {
   margin: 0 2em; }
 
 .tile {
-  border: 1px solid #b4b4b4;
+  border: 2px solid #408DFF;
   height: 10em;
   text-align: center; }
 
