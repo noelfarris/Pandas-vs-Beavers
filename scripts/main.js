@@ -123,6 +123,7 @@ var GameBoard = React.createClass({
 			currentTurn = 
 				<div>
 					<h2>Tie game!</h2>
+					<a className='btn btn-default col-md-4 col-md-offset-4' href="javascript:location.reload(true)" role="button">Play again?</a>
 				</div>
 		}
 

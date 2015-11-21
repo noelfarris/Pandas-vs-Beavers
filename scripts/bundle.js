@@ -19236,6 +19236,11 @@ module.exports = require('./lib/React');
 						'h2',
 						null,
 						'Tie game!'
+					),
+					React.createElement(
+						'a',
+						{ className: 'btn btn-default col-md-4 col-md-offset-4', href: 'javascript:location.reload(true)', role: 'button' },
+						'Play again?'
 					)
 				);
 			}
