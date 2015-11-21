@@ -19143,53 +19143,62 @@ module.exports = require('./lib/React');
 			this.setState({ spaces: myspaces });
 		},
 		checkBoard: function checkBoard() {
-			console.log(this.state.counter);
 			//logic to check spaces for a winning combination
-			if (this.state.spaces[0] == this.state.spaces[1] && this.state.spaces[1] == this.state.spaces[2]) {
-				this.setState({ winner: this.state.spaces[0] });
-				return this.state.spaces[0];
-				console.log(this.state.spaces[0]);
-			} else if (this.state.spaces[3] == this.state.spaces[4] && this.state.spaces[4] == this.state.spaces[5]) {
-				this.setState({ winner: this.state.spaces[3] });
-				return this.state.spaces[3];
-				console.log(this.state.spaces[3]);
-			} else if (this.state.spaces[6] == this.state.spaces[7] && this.state.spaces[7] == this.state.spaces[8]) {
-				this.setState({ winner: this.state.spaces[6] });
+			var spaces = this.state.spaces;
+
+			if (spaces[0] == spaces[1] && spaces[1] == spaces[2]) {
+				this.setState({ winner: spaces[0] });
+				return spaces[0];
+			}
+			if (spaces[3] == spaces[4] && spaces[4] == spaces[5]) {
+				this.setState({ winner: spaces[3] });
+				return spaces[3];
+			}
+			if (spaces[6] == spaces[7] && spaces[7] == spaces[8]) {
+				this.setState({ winner: spaces[6] });
 				return this.state.spaces[6];
-				console.log(this.state.spaces[6]);
-			} else if (this.state.spaces[2] == this.state.spaces[4] && this.state.spaces[4] == this.state.spaces[6]) {
-				this.setState({ winner: this.state.spaces[2] });
-				return this.state.spaces[2];
-				console.log(this.state.spaces[2]);
-			} else if (this.state.spaces[0] == this.state.spaces[4] && this.state.spaces[4] == this.state.spaces[8]) {
-				this.setState({ winner: this.state.spaces[0] });
-				return this.state.spaces[0];
-				console.log(this.state.spaces[0]);
-			} else if (this.state.spaces[0] == this.state.spaces[3] && this.state.spaces[3] == this.state.spaces[6]) {
-				this.setState({ winner: this.state.spaces[0] });
-				return this.state.spaces[0];
-				console.log(this.state.spaces[0]);
-			} else if (this.state.spaces[1] == this.state.spaces[4] && this.state.spaces[4] == this.state.spaces[7]) {
-				this.setState({ winner: this.state.spaces[1] });
-				return this.state.spaces[1];
-				console.log(this.state.spaces[1]);
-			} else if (this.state.spaces[2] == this.state.spaces[5] && this.state.spaces[5] == this.state.spaces[8]) {
-				this.setState({ winner: this.state.spaces[2] });
-				return this.state.spaces[2];
-				console.log(this.state.spaces[2]);
+			}
+			if (spaces[2] == spaces[4] && spaces[4] == spaces[6]) {
+				this.setState({ winner: spaces[2] });
+				return spaces[2];
+			}
+			if (spaces[0] == spaces[4] && spaces[4] == spaces[8]) {
+				this.setState({ winner: spaces[0] });
+				return spaces[0];
+			}
+			if (spaces[0] == spaces[3] && spaces[3] == spaces[6]) {
+				this.setState({ winner: spaces[0] });
+				return spaces[0];
+			}
+			if (spaces[1] == spaces[4] && spaces[4] == spaces[7]) {
+				this.setState({ winner: spaces[1] });
+				return spaces[1];
+			}
+			if (spaces[2] == spaces[5] && spaces[5] == spaces[8]) {
+				this.setState({ winner: spaces[2] });
+				return spaces[2];
+			}
+			if (spaces.join('').length === 9) {
+				this.setState({ winner: 'none' });
+				return 'none';
 			}
 		},
+
+		// resetGame() {
+		//         location.reload(true));
+		// },
 
 		render: function render() {
 			var _this = this;
 
-			//mapping through the tile board, passing elements through to the Tile Component
-			var gBspaces = this.state.spaces.map(function (tile, position) {
+			//looping through the spaces and passing info to the tile class
+			var boardSpaces = this.state.spaces.map(function (tile, position) {
 				return React.createElement(Tile, { key: position, pos: position, spaces: tile, player: _this.state.turn,
 					switchPlayer: _this.switchPlayer, checkBoard: _this.checkBoard,
-					setspaces: _this.setspaces, resetAction: _this.resetGame });
+					setspaces: _this.setspaces });
 			});
 			if (!this.state.winner) {
+				var animal;
 				var currentTurn = React.createElement(
 					'h5',
 					null,
@@ -19197,14 +19206,36 @@ module.exports = require('./lib/React');
 					this.state.turn
 				);
 			} else {
+				if (this.state.winner === 'x') {
+					animal = 'Pandas';
+				} else {
+					animal = 'Beavers';
+				}
+				currentTurn = React.createElement(
+					'div',
+					{ className: 'row' },
+					React.createElement(
+						'h2',
+						null,
+						animal,
+						' win!'
+					),
+					React.createElement(
+						'a',
+						{ className: 'btn btn-default col-md-4 col-md-offset-4', href: 'javascript:location.reload(true)', role: 'button' },
+						'Play again?'
+					)
+				);
+			}
+
+			if (this.state.winner === 'none') {
 				currentTurn = React.createElement(
 					'div',
 					null,
 					React.createElement(
 						'h2',
 						null,
-						this.state.winner,
-						' win!'
+						'Tie game!'
 					)
 				);
 			}
@@ -19221,7 +19252,7 @@ module.exports = require('./lib/React');
 						currentTurn
 					)
 				),
-				gBspaces
+				boardSpaces
 			);
 		}
 	});
@@ -19230,16 +19261,16 @@ module.exports = require('./lib/React');
 		displayName: 'Tile',
 
 		getInitialState: function getInitialState() {
-			//Initial design of players on game board
+			//Setting jsx element state for player icons
 			return {
-				playerOne: React.createElement('div', { className: 'animalIconsPanda' }),
-				playerTwo: React.createElement('div', { className: 'animalIconsBeaver' })
+				panda: React.createElement('div', { className: 'animalIconsPanda' }),
+				beaver: React.createElement('div', { className: 'animalIconsBeaver' })
 
 			};
 		},
 
 		render: function render() {
-			//Setting the position, click event and design for the spaces
+			//Setting a position and click element to add player icons to spaces
 			return React.createElement(
 				'div',
 				{ className: 'col-xs-4 tile', id: 'spaces' + this.props.pos, onClick: this.move },
@@ -19252,16 +19283,17 @@ module.exports = require('./lib/React');
 			);
 		},
 
-		move: function move(event) {
+		move: function move() {
+			//Checking space for a move and setting the spaces state.
 			if (this.state.spaces != undefined) {
 				return;
 			}
 			if (this.props.player == 'Pandas') {
-				this.setState({ spaces: this.state.playerOne });
-				this.props.setspaces(this.props.pos, 'Pandas');
+				this.setState({ spaces: this.state.panda });
+				this.props.setspaces(this.props.pos, 'x');
 			} else {
-				this.setState({ spaces: this.state.playerTwo });
-				this.props.setspaces(this.props.pos, 'Beavers');
+				this.setState({ spaces: this.state.beaver });
+				this.props.setspaces(this.props.pos, '0');
 			}
 			this.props.setspaces(this.props.key);
 			this.props.switchPlayer();
